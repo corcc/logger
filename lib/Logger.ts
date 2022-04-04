@@ -1,5 +1,5 @@
 import http from 'http';
-import { defaultHttpEventLog, HttpEventLogger, HttpEventPrinter } from './HttpEventLogger';
+import { HttpEventLogger, HttpEventPrinter } from './HttpEventLogger';
 
 export type HttpParams = {
 	req?:
@@ -17,8 +17,8 @@ export type HttpParams = {
 export type HttpPrinter = ({ req, res }:HttpParams, ...anyParams:any[])=>void
 
 export class HttpLogger {
-	_req:HttpEventPrinter = defaultHttpEventLog
-	_res:HttpEventPrinter = defaultHttpEventLog
+	_req:HttpEventPrinter = new HttpEventLogger()
+	_res:HttpEventPrinter = new HttpEventLogger()
 
 	constructor (on?:{
 		req?:HttpEventPrinter
@@ -28,8 +28,8 @@ export class HttpLogger {
 		if (on?.res) { this.res = on?.res; }
 	}
 
-	get req () { return this._req; }
+	get req ():HttpEventPrinter { return this._req; }
 	set req (req:HttpEventPrinter) { this._req = new HttpEventLogger(req); }
-	get res () { return this._res; }
+	get res ():HttpEventPrinter { return this._res; }
 	set res (res:HttpEventPrinter) { this._res = new HttpEventLogger(res); }
 }

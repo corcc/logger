@@ -3,9 +3,9 @@ import { HttpPrinter, HttpParams } from './Logger';
 
 export function defaultHttpEventPrint ({ req, res }:HttpParams) {}
 export type HttpEventPrinter = {
-	end?:HttpPrinter
-	data?:HttpPrinter
-	error?:HttpPrinter
+	end:HttpPrinter
+	data:HttpPrinter
+	error:HttpPrinter
 }
 export const defaultHttpEventLog = {
 	end: defaultHttpEventPrint,
@@ -20,7 +20,11 @@ export class HttpEventLogger {
 	_data:HttpPrinter = defaultHttpEventPrint
 	_error:HttpPrinter = defaultHttpEventPrint
 	constructor (
-		on?:HttpEventPrinter,
+		on?:{
+			end?:HttpPrinter
+			data?:HttpPrinter
+			error?:HttpPrinter
+		},
 		logger?:Logger
 	) {
 		if (on?.end) { this.end = on.end; }
@@ -29,13 +33,13 @@ export class HttpEventLogger {
 		if (logger) { this.logger = logger; }
 	}
 
-	get logger () { return this._logger; }
+	get logger ():Logger { return this._logger; }
 	set logger (logger:Logger) { this._logger = logger; }
 
-	get end () { return this._end; }
+	get end ():HttpPrinter { return this._end; }
 	set end (end:HttpPrinter) { this._end = end; }
-	get data () { return this._data; }
+	get data ():HttpPrinter { return this._data; }
 	set data (data:HttpPrinter) { this._data = data; }
-	get error () { return this._error; }
+	get error ():HttpPrinter { return this._error; }
 	set error (error:HttpPrinter) { this._error = error; }
 }
