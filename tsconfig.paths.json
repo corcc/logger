@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"rootDir": "./",
+		"outDir": "./build",
+		"paths": {
+			"@lib": ["./lib"]
+		}
+	}
+}
